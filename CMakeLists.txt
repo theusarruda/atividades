@@ -1,23 +1,17 @@
-cmake_minimum_required(VERSION 4.3)
-project(atividades C)
-
-set(CMAKE_C_STANDARD 11)
-
-add_executable(atividades
-        1.c
-        2.c
-        3.c
-        4.c)
-
 cmake_minimum_required(VERSION 3.20)
-project(atividades C) # Garante que o projeto entenda a linguagem C
+project(atividades C)
 
 set(CMAKE_C_STANDARD 99)
 
-# BUSCA AUTOMÁTICA PARA ARQUIVOS .C
-file(GLOB arquivos_c *.c)
+# Pega todos os .c da pasta do CMakeLists.txt
+file(GLOB arquivos_c CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/*.c)
 
 foreach(arquivo ${arquivos_c})
-    get_filename_component(nome_sem_extensao ${arquivo} NAME_WE)
-    add_executable(${nome_sem_extensao} ${arquivo})
+    # aula7.1.c -> aula7.1
+    get_filename_component(nome ${arquivo} NAME_WLE)
+    # troca ponto por underscore: aula7.1 -> aula7_1
+    string(REPLACE "." "_" nome ${nome})
+
+    add_executable(${nome} ${arquivo}
+            aula411.c)
 endforeach()
